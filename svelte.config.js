@@ -1,4 +1,5 @@
 import adapter from '@bun-community/sveltekit-adapter-bun';
+import cfAdapter from '@sveltejs/adapter-cloudflare';
 import preprocess from 'svelte-preprocess';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -9,8 +10,14 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-							 dynamic_origin: true
-						 })
+			dynamic_origin: true,
+			adapter: cfAdapter({
+				routes: {
+					include: ['/*'],
+					exclude: ['<all>']
+				}
+			})
+		})
 	}
 };
 
